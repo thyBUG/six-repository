@@ -1,9 +1,6 @@
 package com.aaa.lee.app.service;
 
-import com.aaa.lee.app.domain.History;
-import com.aaa.lee.app.domain.Member;
-import com.aaa.lee.app.domain.MyOrder;
-import com.aaa.lee.app.domain.Product;
+import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,5 +105,30 @@ public interface IRepastService {
      */
     @PostMapping("/selectId")
     List<History> selectId();
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      根据会员id获取会员生日
+     * @param []
+     * @date 2019/11/21
+     * @return java.util.List<com.aaa.lee.app.domain.MemberReceiveAddress>
+     * @throws
+     **/
+    @PostMapping ("/updateBirth")
+    Boolean upadteMemberBirthByMemberId(@RequestParam("birthday") Date birthday, @RequestParam("id") Long id);
+
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      增加意见反馈
+     * @param []
+     * @date 2019/11/21
+     * @return java.util.List<com.aaa.lee.app.domain.MemberReceiveAddress>
+     * @throws
+     **/
+    @PostMapping("/addcomplain")
+    Boolean addMemberComplain(@RequestBody MemberComplain memberComplain);
 
 }

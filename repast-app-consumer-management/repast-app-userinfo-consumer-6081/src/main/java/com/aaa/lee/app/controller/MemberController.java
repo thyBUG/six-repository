@@ -4,6 +4,7 @@ import com.aaa.lee.app.base.BaseController;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.History;
 import com.aaa.lee.app.domain.Member;
+import com.aaa.lee.app.domain.MemberComplain;
 import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.service.IRepastService;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -134,4 +136,44 @@ public class MemberController extends BaseController {
         }
         return null;
     }
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      通过会员id修改会员生日
+     * @param [MemberId]
+     * @date 2019/11/21
+     * @return java.util.List<com.aaa.lee.app.domain.Product>
+     * @throws
+     **/
+    @PostMapping("/updateBirth")
+    @ApiOperation(value = "会员生日", notes = "修改会员生日")
+    public ResultData updateMemberBirth(Date birthday, Long id) {
+        Boolean upadteMemberBirthByMemberId = repastService.upadteMemberBirthByMemberId(birthday , id);
+        if (upadteMemberBirthByMemberId){
+            return success();
+        }else {
+            return failed();
+        }
+    }
+
+    /**
+     *
+     * @param memberComplain
+     * @return
+     */
+    @PostMapping("/addcomplain")
+    @ApiOperation(value = "意见反馈", notes = "新增意见反馈")
+    public ResultData addMemberComplain(MemberComplain memberComplain){
+
+        Boolean complain = repastService.addMemberComplain(memberComplain);
+        if(complain){
+            return success();
+        }else{
+            return  failed();
+        }
+
+    }
+
 }
+

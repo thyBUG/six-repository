@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.math.BigInteger;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.aaa.lee.app.staticstatus.StaticProperties.*;
 
@@ -149,5 +152,19 @@ public class MemberService extends BaseService<Member> {
 
 
         return integration;
+    }
+    /**
+     *
+     * @param birthday
+     * @param id
+     * @return
+     */
+    public int updateBirthday(Date birthday, Long id) {
+        Map<String, Object> map = new HashMap();
+        map.put("birthday",birthday);
+        map.put("id",id);
+        int i = memberMapper.updateBir(map);
+        return i;
+
     }
 }

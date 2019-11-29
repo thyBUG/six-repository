@@ -35,4 +35,7 @@
   <update id="updateBalance" parameterType="com.aaa.lee.app.domain.UpdateBalance" >
         update ums_member um set member_balance=um.member_balance + #{number} where id= #{id}
   </update>
+  <update id="updateBir" parameterType="map">
+    update ums_member set birthday=#{birthday} where id=#{id}
+  </update>
 </mapper>

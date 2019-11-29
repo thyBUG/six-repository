@@ -1,13 +1,11 @@
 package com.aaa.lee.app.fallback;
 
-import com.aaa.lee.app.domain.History;
-import com.aaa.lee.app.domain.Member;
-import com.aaa.lee.app.domain.MyOrder;
-import com.aaa.lee.app.domain.Product;
+import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.service.IRepastService;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,6 +86,16 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             public List<History> selectId() {
                 System.out.println("积分明细");
                 return null;
+            }
+
+            @Override
+            public Boolean upadteMemberBirthByMemberId(Date birthday, Long id) {
+                return false;
+            }
+
+            @Override
+            public Boolean addMemberComplain(MemberComplain memberComplain) {
+                return false;
             }
         };
         return repastService;
