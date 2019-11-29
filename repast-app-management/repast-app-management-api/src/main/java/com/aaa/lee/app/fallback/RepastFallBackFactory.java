@@ -1,9 +1,13 @@
 package com.aaa.lee.app.fallback;
 
 import com.aaa.lee.app.domain.Member;
+import com.aaa.lee.app.domain.MyOrder;
+import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.service.IRepastService;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Company AAA软件教育
@@ -17,6 +21,32 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
     @Override
     public IRepastService create(Throwable throwable) {
         IRepastService repastService = new IRepastService() {
+
+
+            @Override
+            public List<MyOrder> GetAllOrders() {
+                System.out.println("获取订单信息列表");
+                return null;
+            }
+
+            @Override
+            public Boolean orderCollects(Long orderId) {
+                System.out.println("测试订单商品收藏熔断数据");
+                return null;
+            }
+
+            @Override
+            public List<Product> getAllCollects() {
+                System.out.println("测试获取收藏信息列表");
+                return null;
+            }
+
+            @Override
+            public Boolean productCollects(Long shopId) {
+                System.out.println("测试商品收藏熔断数据");
+                return null;
+            }
+
             @Override
             public Boolean doLogin(Member member) {
                 System.out.println("测试登录熔断");

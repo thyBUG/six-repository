@@ -1,11 +1,16 @@
 package com.aaa.lee.app.service;
 
 import com.aaa.lee.app.domain.Member;
+import com.aaa.lee.app.domain.MyOrder;
+import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @Company AAA软件教育
@@ -20,6 +25,40 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 @FeignClient(value = "userinfo-interface-provider", fallbackFactory = RepastFallBackFactory.class)
 public interface IRepastService {
+
+
+    /**
+     * 获取所有订单信息列表
+     * @return
+     */
+    @GetMapping("/getAllOrder")
+    List<MyOrder> GetAllOrders();
+    /**
+     * 填写订单的时候执行收藏操作
+     * @param orderId
+     * @param
+     * @return
+     */
+    @PostMapping("/oCollect")
+    Boolean orderCollects(@RequestParam(value = "orderId") Long orderId);
+    /**
+     * 获取收藏列表信息
+     * @param
+     * @return
+     */
+    @GetMapping("/getAllCollect")
+    List<Product> getAllCollects();
+    /**
+     *浏览商品执行添加收藏操作
+     * @param shopId
+     * @param
+     * @return
+     */
+    @PostMapping("/pCollect")
+    Boolean productCollects(@RequestParam(value = "shopId") Long shopId);
+
+
+
     /**
      * 执行登录
      * @param member
