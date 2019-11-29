@@ -134,5 +134,20 @@ public class MemberService extends BaseService<Member> {
         }
         return null;
     }
+    /**
+     * 通过用户名查询信息 总积分
+     */
 
+    public Integer selectById(RedisService redisService){
+        String user = redisService.get(REDIS_KEY);
+
+        Member member = JSONUtil.toObject(user, Member.class);
+
+        Member member1 = memberMapper.selectByPrimaryKey(member.getId());
+
+        Integer integration = member1.getIntegration();
+
+
+        return integration;
+    }
 }

@@ -53,4 +53,12 @@ public class MemberController {
     public Integer updateBalance(@RequestParam("number") Double number)throws Exception{
         return memberService.updateBalance(number,redisService);
     }
+    /**
+     * 查询总积分
+     */
+    @PostMapping("/selectById")
+    public Integer selectById(){
+
+        return   memberService.selectById(redisService);
+    };
 }

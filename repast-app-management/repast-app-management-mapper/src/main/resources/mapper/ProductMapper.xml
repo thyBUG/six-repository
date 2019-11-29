@@ -57,4 +57,11 @@
         from pms_product pp LEFT JOIN pms_collect pc
         ON pp.id = pc.product_id where pc.member_id = #{id}
     </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        	select * from pms_product pp
+      where product_category_id=1 and
+      delete_status=0 and
+      publish_status=1
+
+  </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.aaa.lee.app.fallback;
 
+import com.aaa.lee.app.domain.History;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MyOrder;
 import com.aaa.lee.app.domain.Product;
@@ -68,6 +69,24 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             @Override
             public Integer updateBalance(Double number) {
                 System.out.println("测试余额变动");
+                return null;
+            }
+
+            @Override
+            public List<Product> selectAll() {
+                System.out.println("测试登录熔断数据");
+                return null;
+            }
+
+            @Override
+            public Integer selectById() {
+                System.out.println("测试总积分");
+                return null;
+            }
+
+            @Override
+            public List<History> selectId() {
+                System.out.println("积分明细");
                 return null;
             }
         };

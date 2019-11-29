@@ -1,5 +1,6 @@
 package com.aaa.lee.app.service;
 
+import com.aaa.lee.app.domain.History;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MyOrder;
 import com.aaa.lee.app.domain.Product;
@@ -87,5 +88,24 @@ public interface IRepastService {
      */
    @PostMapping("/updateBalance")
     Integer updateBalance(@RequestParam("number") Double number);
+    /**
+     * 查询积分商城可兑换的商品信息
+     * @return
+     */
+    @PostMapping("/selectAll")
+    List<Product> selectAll();
+
+    /**
+     * 查询总积分
+     */
+    @PostMapping("/selectById")
+    Integer selectById();
+
+    /**
+     * 查询积分明细
+     *
+     */
+    @PostMapping("/selectId")
+    List<History> selectId();
 
 }

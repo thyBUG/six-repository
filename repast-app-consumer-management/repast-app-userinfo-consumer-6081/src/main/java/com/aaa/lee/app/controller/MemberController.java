@@ -2,7 +2,9 @@ package com.aaa.lee.app.controller;
 
 import com.aaa.lee.app.base.BaseController;
 import com.aaa.lee.app.base.ResultData;
+import com.aaa.lee.app.domain.History;
 import com.aaa.lee.app.domain.Member;
+import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.service.IRepastService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @ProjectName: repast-app-parent
@@ -89,5 +93,45 @@ public class MemberController extends BaseController {
             return failed("修改异常");
         }
 
+    }
+    @PostMapping("/selectAllProduct")
+    @ApiOperation(value = "查询积分商城", notes = "查询积分商城所有商品")
+    public ResultData selectAll(){
+        List<Product> products = repastService.selectAll();
+        if (null!=products){
+            return success(products);
+        }else {
+
+            return failed();
+        }
+
+    }
+    /**
+     * integration
+     * 查询会员总积分
+     */
+    @PostMapping("selectById")
+    public Integer selectById(){
+
+        Integer integer = repastService.selectById();
+        if (null!=integer){
+            return integer;
+        }
+        return 0;
+    }
+
+
+    /**
+     * 通过会员id
+     * 查询积分明细
+     */
+    @PostMapping("/selectId")
+    public ResultData selectId(){
+
+        List<History> histories = repastService.selectId();
+        if (null!= histories){
+            return success(histories);
+        }
+        return null;
     }
 }

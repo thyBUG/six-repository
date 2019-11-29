@@ -5,6 +5,9 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public interface ProductMapper extends Mapper<Product> {
 
     /**
@@ -20,4 +23,9 @@ public interface ProductMapper extends Mapper<Product> {
      * @return
      */
     List<Product> getAllCollects(Long id);
+
+
+    @Override
+    List<Product> selectAll();
+
 }
