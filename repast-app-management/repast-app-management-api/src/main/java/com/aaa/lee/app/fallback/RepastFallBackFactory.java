@@ -3,6 +3,7 @@ package com.aaa.lee.app.fallback;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.service.IRepastService;
+import com.aaa.lee.app.vo.MemberCouponInfoVo;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,48 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
     @Override
     public IRepastService create(Throwable throwable) {
         IRepastService repastService = new IRepastService() {
+            /**
+             * 测试查询所有优惠券熔断数据
+             * @param memberId
+             * @return
+             */
+            @Override
+            public List<MemberCouponInfoVo> allMemberCouponInfo(Long memberId) {
+                System.out.println("测试查询所有优惠券熔断数据");
+                return null;
+            }
 
+            /**
+             * 测试查询所有未使用的熔断数据
+             * @param memberId
+             * @return
+             */
+            @Override
+            public List<MemberCouponInfoVo> UnusedMemberCouponInfo(Long memberId) {
+                System.out.println("测试查询所有未使用的熔断数据");
+                return null;
+            }
+
+            /**
+             * 测试查询所有已使用的熔断数据
+             * @param memberId
+             * @return
+             */
+            @Override
+            public List<MemberCouponInfoVo> usedMemberCouponInfo(Long memberId) {
+                System.out.println("测试查询所有已使用的熔断数据");
+                return null;
+            }
+
+            /**
+             * "测试查询领券中心信息
+             * @return
+             */
+            @Override
+            public List<CouponInfo> getCouponCenter() {
+                System.out.println("测试查询领券中心信息");
+                return null;
+            }
 
             @Override
             public List<MyOrder> GetAllOrders() {

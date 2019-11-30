@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
+import com.aaa.lee.app.vo.MemberCouponInfoVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -231,6 +232,35 @@ public interface IRepastService {
 
 
 
+    /**
+     * 查询所有优惠券信息
+     * @param memberId
+     * @return
+     */
+    @PostMapping("/allCoupon")
+    List<MemberCouponInfoVo> allMemberCouponInfo(@RequestParam("memberId") Long memberId);
 
+    /**
+     * 查询所有未使用优惠券信息
+     * @param memberId
+     * @return
+     */
+    @PostMapping("/allUnusedCoupon")
+    List<MemberCouponInfoVo> UnusedMemberCouponInfo(@RequestParam("memberId") Long memberId);
+
+    /**
+     * 查询所有已使用优惠券信息
+     * @param memberId
+     * @return
+     */
+    @PostMapping("/allUsedCoupon")
+    List<MemberCouponInfoVo> usedMemberCouponInfo(@RequestParam("memberId") Long memberId);
+
+    /**
+     * 领券中心信息
+     * @return
+     */
+    @PostMapping("/getCoupon")
+    List<CouponInfo> getCouponCenter();
 
 }
