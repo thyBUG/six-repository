@@ -1,12 +1,12 @@
 package com.aaa.lee.app.service;
 
+import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -130,5 +130,107 @@ public interface IRepastService {
      **/
     @PostMapping("/addcomplain")
     Boolean addMemberComplain(@RequestBody MemberComplain memberComplain);
+
+    /***
+     * 查看评价
+     * @param memberId
+     * @return
+     */
+    @GetMapping("/doComment")
+    ResultData doComment(@RequestParam("memberId") Integer memberId);
+
+    /***
+     * 删除评价
+     * @param id
+     * @return
+     */
+    @GetMapping("/deleteComment")
+    ResultData deleteComment(@RequestParam("id") Integer id);
+
+    /***
+     * 添加评价
+     * @param shopId
+     * @param orderId
+     * @param productId
+     * @param memberNickName
+     * @param productName
+     * @param star
+     * @param memberIp
+     * @param showStatus
+     * @param productAttribute
+     * @param collectCouont
+     * @param pics
+     * @param memberIcon
+     * @param replayCount
+     * @param conent
+     * @return
+     */
+    @GetMapping("/addComment")
+    ResultData addComment(@RequestParam("shopId")  Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
+                          @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
+                          @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
+                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent);
+
+    /**
+     * 单添加图片
+     * @param file
+     * @return
+     */
+
+    @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String uploadHead(@RequestPart MultipartFile file);
+
+
+    /***
+     * 多张图片上传
+     * @param file
+     * @return
+     */
+
+    @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String upload(@RequestPart List<MultipartFile>  file);
+    /**
+     * 根据 订单ID查点铺信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/shop")
+    ResultData shopResult(@RequestParam("shopId") Integer id);
+
+    /***
+     * 查询评价回复表
+     * @param id
+     * @param orderId
+     * @return
+     */
+
+    @GetMapping("/doCommentReplay")
+    ResultData doCommentReplay(@RequestParam("orderId") Integer orderId);
+
+    /***
+     * 评价回复表
+     * @param commentReplay
+     * @return
+     */
+    @PostMapping("/addCommentReplay")
+    Integer addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
+                             @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
+                             @RequestParam("type") Integer type);
+
+
+
+
+    /***
+     * 评价数目
+     * @param commentReplay
+     * @return
+     */
+
+    @GetMapping("/doCount")
+    Integer doCount(@RequestParam("memberId") Integer memberId);
+
+
+
+
 
 }
