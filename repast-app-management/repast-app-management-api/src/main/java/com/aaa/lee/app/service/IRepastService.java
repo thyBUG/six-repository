@@ -1,6 +1,7 @@
 package com.aaa.lee.app.service;
 
 import com.aaa.lee.app.base.ResultData;
+import com.aaa.lee.app.config.FeignMultipartSupportConfig;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
 import com.aaa.lee.app.vo.MemberCouponInfoVo;
@@ -23,7 +24,7 @@ import java.util.List;
  *          ResultData selectUsersCondition(@RquestPara("username") String username, @RequestParam("age") Integer age);---->正确
  *
  **/
-@FeignClient(value = "userinfo-interface-provider", fallbackFactory = RepastFallBackFactory.class)
+@FeignClient(value = "userinfo-interface-provider", fallbackFactory = RepastFallBackFactory.class,configuration =FeignMultipartSupportConfig.class)
 public interface IRepastService {
 
 
@@ -189,7 +190,7 @@ public interface IRepastService {
      */
 
     @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String upload(@RequestPart List<MultipartFile>  file);
+     String upload(@RequestPart(value = "file") MultipartFile[]  file);
     /**
      * 根据 订单ID查点铺信息
      * @param id

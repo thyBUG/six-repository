@@ -22,7 +22,7 @@ public class CommentReplayController extends BaseController {
 
     @GetMapping("/doCommentReplay")
     @ApiOperation(value = "查询评论回复",notes = "执行查询评论回复操作")
-    ResultData doCommentReplay(@RequestParam("orderId") Integer orderId) {
+    public  ResultData doCommentReplay(@RequestParam("orderId") Integer orderId) {
         ResultData commentReplays = iRepastService.doCommentReplay(orderId);
         System.out.println("dkfhgg" + commentReplays);
         if (null != commentReplays) {
@@ -35,7 +35,7 @@ public class CommentReplayController extends BaseController {
 
         @GetMapping("/addCommentReplay")
         @ApiOperation(value = "评论回复",notes = "执行评论回复操作")
-        ResultData addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
+      public  ResultData addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
                                     @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
                                     @RequestParam("type") Integer type) {
              System.out.println("++++++++++++++++"+commentId);

@@ -24,7 +24,7 @@ public class ShopController extends BaseController {
 
     @ApiOperation(value = "评论",notes = "执行评论操作")
     @GetMapping("/shop")
-    ResultData shopResult(@RequestParam("id") Integer id){
+    public  ResultData shopResult(@RequestParam("id") Integer id){
         iRepastService.shopResult(id);
 
         if (null!=iRepastService.shopResult(id)){

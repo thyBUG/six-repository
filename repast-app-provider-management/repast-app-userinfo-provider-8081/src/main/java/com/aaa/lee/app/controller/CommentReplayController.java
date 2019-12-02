@@ -28,7 +28,8 @@ public class CommentReplayController extends BaseController {
      * @return
      */
     @GetMapping("/doCommentReplay")
-    ResultData doCommentReplay(@RequestParam("orderId") Integer orderId){
+    public ResultData doCommentReplay(@RequestParam("orderId") Integer orderId){
+
 
         System.out.println("jjcnjcj"+"----"+orderId);
         List<CommentReplay> CommentReplayList = commentReplayService.doCommentReplay(orderId);
@@ -46,7 +47,7 @@ public class CommentReplayController extends BaseController {
      */
 
       @PostMapping("/addCommentReplay")
-      Integer addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
+    public Integer addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
                                @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
                                @RequestParam("type") Integer type) {
 

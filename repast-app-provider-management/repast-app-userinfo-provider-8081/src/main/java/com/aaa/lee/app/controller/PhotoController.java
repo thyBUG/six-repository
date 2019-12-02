@@ -52,19 +52,18 @@ public class PhotoController extends BaseController {
     /***
      * 多文件上传
      */
-
-
-    @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String upload(@RequestPart List<MultipartFile> file) {
+    @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
+    public String upload(@RequestPart(value = "file") MultipartFile[] file) {
              String path="";
-        System.out.println(file.size());
-        for (MultipartFile fina : file) {
+            String paths="";
+             System.out.println(file.length);
+        Map<String,Object> map= new HashMap<String,Object>();
+          for (MultipartFile fina : file) {
             System.out.println("provider层" + fina.getOriginalFilename());
             path= uploadService.uploadHead(fina);
             path=path+";";
+            paths+=path;
         }
-        String paths="";
-        paths+=path;
         System.out.println("================"+paths);
         return paths;
     }

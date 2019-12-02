@@ -49,7 +49,7 @@ public class CommentController extends BaseController {
 
         @GetMapping("/addComment")
         @ApiOperation(value = "添加数据接口",notes = "执行添加订单数据接口操作")
-       ResultData addComment(@RequestParam("shopId")  Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
+     public   ResultData addComment(@RequestParam("shopId")  Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
                           @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
                           @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
                           @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent){
@@ -73,7 +73,7 @@ public class CommentController extends BaseController {
      */
     @GetMapping("/doCount")
     @ApiOperation(value = "评价数目接口",notes = "执行评价数目接口操作")
-    ResultData doCount(@RequestParam("memberId") Integer memberId){
+    public ResultData doCount(@RequestParam("memberId") Integer memberId){
         return success("查询成功",iRepastService.doCount(memberId));
 
 

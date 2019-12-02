@@ -35,7 +35,7 @@ public class CommentController extends BaseController {
      * @return
      */
     @GetMapping("/doComment")
-    ResultData doComment(@RequestParam("memberId") Integer memberId) {
+   public ResultData doComment(@RequestParam("memberId") Integer memberId) {
         List<CommentVo> doCommentList = commentService.doComment(memberId);
         Integer i = commentService.Count(memberId);
         if (null != doCommentList) {
@@ -52,7 +52,7 @@ public class CommentController extends BaseController {
      * @return
      */
     @GetMapping("/deleteComment")
-    ResultData deleteComment(@RequestParam("id") Integer id) {
+    public ResultData deleteComment(@RequestParam("id") Integer id) {
         System.out.println("ppppp" + id);
 
         if (commentService.deleteComment(id) > 0) {
@@ -69,7 +69,7 @@ public class CommentController extends BaseController {
      * @return
      */
     @GetMapping("/addComment")
-    ResultData addComment(@RequestParam("shopId") Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
+   public ResultData addComment(@RequestParam("shopId") Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
                           @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
                           @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
                           @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent) {
@@ -97,9 +97,8 @@ public class CommentController extends BaseController {
         }
     }
 
-
     @GetMapping("/doCount")
-    Integer doCount(@RequestParam("memberId") Integer memberId) {
+   public Integer doCount(@RequestParam("memberId") Integer memberId) {
         return commentService.Count(memberId);
     }
 

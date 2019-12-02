@@ -166,7 +166,7 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public String upload(List<MultipartFile> file) {
+            public String upload(MultipartFile[] file) {
                 return null;
             }
 

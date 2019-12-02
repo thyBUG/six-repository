@@ -34,20 +34,17 @@ public class PhotoController extends BaseController {
 
 
     @ApiOperation(value = "多图片上传接口",notes = "执行图片上传接口操作")
-    @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String upload(@RequestPart List<MultipartFile> file){
-
-        System.out.println("consumer"+ "-------"+file.size());
-        return  iRepastService.upload(file);
+    @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
+    public String upload(@RequestPart(value = "file") MultipartFile[] file){
+        String path=iRepastService.upload(file);
+        return  path;
     }
 
 
     @GetMapping(value = "/upl")
     public  ModelAndView DDD(ModelAndView  mv){
-
         mv.setViewName("upload_head");
         return mv;
-
     }
 
 
