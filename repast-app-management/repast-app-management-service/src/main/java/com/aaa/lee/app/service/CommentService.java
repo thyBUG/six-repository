@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Comment;
 import com.aaa.lee.app.domain.CommentVo;
+import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.mapper.CommentMapper;
 import com.aaa.lee.app.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +36,26 @@ public class CommentService extends BaseService<Comment> {
      * 查询
      * @return
      */
-    public List<CommentVo> doComment(Integer memberId){
-
+    public List<CommentVo> doComment(String token,MemberService memberService) {
         try {
-            List<CommentVo> doCommentList = commentMapper.getseleteAll(memberId);
-            if (null!=doCommentList){
-                return doCommentList;
+            if (null != token) {
+                Member member = memberService.Token(token);
+                if (null != member.getToken()) {
+                    Long memberId = member.getId();
+                    List<CommentVo> doCommentList = commentMapper.getseleteAll(memberId.intValue());
+                    if (null != doCommentList){
+                        return doCommentList;
+                    }
+                    return null;
+                }
+                return null;
             }
             return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return  null;
+
     }
 
     /**
@@ -55,9 +64,20 @@ public class CommentService extends BaseService<Comment> {
      * @return
      */
 
-    public Integer deleteComment(Integer id){
+    public Integer deleteComment(Integer id,String token,MemberService memberService){
         try {
-           return super.deleteByPrimaryKey(id);
+            if (null!=token){
+                Member member = memberService.Token(token);
+                if (null != member.getToken()) {
+                    Integer integer = super.deleteByPrimaryKey(id);
+                    if (null!=integer){
+                        return integer;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,12 +85,31 @@ public class CommentService extends BaseService<Comment> {
     }
 
 
-   public  Integer addComment (Comment comment){
-      SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    /**
+     * 添加评价
+     * @param comment
+     * @param token
+     * @param memberService
+     * @return
+     */
+   public  Integer addComment (Comment comment,String token,MemberService memberService){
+
        try {
-           Date date=dateFormat.parse(dateFormat.format(new Date()));
-           comment.setCreateTime(date);
-          return super.save(comment);
+           if (null!=token){
+               Member member = memberService.Token(token);
+               if (null != member.getToken()) {
+                   SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                   Date date=dateFormat.parse(dateFormat.format(new Date()));
+                   comment.setCreateTime(date);
+                   Integer save = super.save(comment);
+                   if (null!=save){
+                       return save;
+                   }
+                   return null;
+               }
+               return null;
+               }
+          return null;
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -80,9 +119,20 @@ public class CommentService extends BaseService<Comment> {
     /***
      * 评价数量
      */
-   public  Integer Count(Integer memberId){
+   public  Integer Count(String token,MemberService memberService){
        try {
-           return commentMapper.getCount(memberId);
+           if (null!=token){
+               Member member = memberService.Token(token);
+               if (null != member.getToken()) {
+                   int count = commentMapper.getCount(member.getId().intValue());
+                   if (count>0){
+                       return count;
+                   }
+                   return null;
+               }
+                return null;
+               }
+           return null;
        }catch (Exception e){
            e.printStackTrace();
        }

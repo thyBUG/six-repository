@@ -11,6 +11,6 @@ import java.util.List;
 public interface CommentReplayMapper extends Mapper<CommentReplay> {
 
 
-    List<CommentReplay> selectsAll(@Param("orderId") Integer orderId);
+    List<CommentReplay> selectsAll(@Param("commentId") Integer commentId);
 
 }

@@ -38,4 +38,6 @@
   <update id="updateBir" parameterType="map">
     update ums_member set birthday=#{birthday} where id=#{id}
   </update>
+
+
 </mapper>

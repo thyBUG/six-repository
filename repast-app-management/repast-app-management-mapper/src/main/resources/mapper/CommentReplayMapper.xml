@@ -17,7 +17,7 @@
      from
      pms_comment_replay pcr
      inner join
-     pms_comment pt  on pcr.comment_id=pt.id where pt.order_id=#{orderId}
+     pms_comment pt  on pcr.comment_id=pt.id  where pcr.comment_id=#{commentId}
   </select>
 
 </mapper>

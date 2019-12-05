@@ -18,6 +18,7 @@ import static com.aaa.lee.app.staticstatus.StaticProperties.*;
 
 @Service
 public class AllMemberCouponService extends BaseService<MemberCouponInfo> {
+
     @Autowired
     private MemberCouponInfoMapper memberCouponInfoMapper;
 

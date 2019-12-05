@@ -1,4 +1,5 @@
 package com.aaa.lee.app.config;
+
 import feign.RequestTemplate;
 import feign.codec.EncodeException;
 import feign.codec.Encoder;
@@ -8,6 +9,7 @@ import feign.form.spring.SpringManyMultipartFilesWriter;
 import feign.form.spring.SpringSingleMultipartFileWriter;
 import lombok.val;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
@@ -23,7 +25,7 @@ public class FeignSpringFormEncoder extends FormEncoder {
      * Constructor with the default Feign's encoder as a delegate.
      */
     public FeignSpringFormEncoder() {
-        this(new Encoder.Default());
+        this(new Default());
     }
 
     /**

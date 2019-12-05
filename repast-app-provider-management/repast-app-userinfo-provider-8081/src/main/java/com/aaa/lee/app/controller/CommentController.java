@@ -5,14 +5,11 @@ import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.Comment;
 import com.aaa.lee.app.domain.CommentVo;
 import com.aaa.lee.app.service.CommentService;
-import com.aaa.lee.app.service.UploadService;
+import com.aaa.lee.app.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-
 
 @RestController
 public class CommentController extends BaseController {
@@ -21,10 +18,7 @@ public class CommentController extends BaseController {
     private CommentService commentService;
 
     @Autowired
-    private UploadService uploadService;
-
-    @Autowired
-    private PhotoController photoController;
+    private MemberService memberService;
 
     private Comment comment = new Comment();
 
@@ -35,16 +29,15 @@ public class CommentController extends BaseController {
      * @return
      */
     @GetMapping("/doComment")
-   public ResultData doComment(@RequestParam("memberId") Integer memberId) {
-        List<CommentVo> doCommentList = commentService.doComment(memberId);
-        Integer i = commentService.Count(memberId);
-        if (null != doCommentList) {
-            return success("查询成功", doCommentList);
-        } else {
-            return failed("查询失败");
-        }
-    }
+   public ResultData doComment(@RequestParam("token") String token,MemberService memberService) {
+        List<CommentVo> doCommentList =  commentService.doComment(token, memberService);
 
+            if (null != doCommentList) {
+                return success("查询成功", doCommentList);
+            } else {
+                return failed("查询失败");
+            }
+    }
     /**
      * 删除评价回复表
      *
@@ -52,10 +45,10 @@ public class CommentController extends BaseController {
      * @return
      */
     @GetMapping("/deleteComment")
-    public ResultData deleteComment(@RequestParam("id") Integer id) {
+    public ResultData deleteComment(@RequestParam("id") Integer id,@RequestParam("token") String token,MemberService memberService) {
         System.out.println("ppppp" + id);
-
-        if (commentService.deleteComment(id) > 0) {
+        Integer integer = commentService.deleteComment(id, token, memberService);
+        if (null!=integer) {
             return success("删除成功");
         } else {
             return failed("删除失败");
@@ -72,7 +65,7 @@ public class CommentController extends BaseController {
    public ResultData addComment(@RequestParam("shopId") Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
                           @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
                           @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
-                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent) {
+                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent,@RequestParam("token") String token,MemberService memberService) {
         System.out.println("---------------------------" + shopId.byteValue());
         comment.setShopId(shopId.longValue());
         comment.setOrderId(orderId.longValue());
@@ -88,9 +81,10 @@ public class CommentController extends BaseController {
         comment.setMemberIcon(memberIcon);
         comment.setReplayCount(replayCount);
         comment.setContent(conent);
-        commentService.addComment(comment);
 
-        if (commentService.addComment(comment) > 0) {
+
+        Integer integer = commentService.addComment(comment, token, memberService);
+        if (null!=integer) {
             return success("添加成功");
         } else {
             return failed("添加失败");
@@ -98,8 +92,10 @@ public class CommentController extends BaseController {
     }
 
     @GetMapping("/doCount")
-   public Integer doCount(@RequestParam("memberId") Integer memberId) {
-        return commentService.Count(memberId);
+   public Integer doCount(@RequestParam("token") String token,MemberService memberService) {
+
+        Integer count = commentService.Count(token, memberService);
+        return count;
     }
 
 

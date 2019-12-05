@@ -139,7 +139,7 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/doComment")
-    ResultData doComment(@RequestParam("memberId") Integer memberId);
+    ResultData doComment(@RequestParam("token") String token,MemberService memberService);
 
     /***
      * 删除评价
@@ -147,31 +147,18 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/deleteComment")
-    ResultData deleteComment(@RequestParam("id") Integer id);
+    ResultData deleteComment(@RequestParam("id") Integer id,@RequestParam("token") String token,MemberService memberService);
 
     /***
      * 添加评价
-     * @param shopId
-     * @param orderId
-     * @param productId
-     * @param memberNickName
-     * @param productName
-     * @param star
-     * @param memberIp
-     * @param showStatus
-     * @param productAttribute
-     * @param collectCouont
-     * @param pics
-     * @param memberIcon
-     * @param replayCount
-     * @param conent
      * @return
      */
     @GetMapping("/addComment")
     ResultData addComment(@RequestParam("shopId")  Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
                           @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
                           @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
-                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent);
+                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent,
+                          @RequestParam("token") String token,MemberService memberService);
 
     /**
      * 单添加图片
@@ -197,7 +184,7 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/shop")
-    ResultData shopResult(@RequestParam("shopId") Integer id);
+    ResultData shopResult(@RequestParam("shopId") Integer id,@RequestParam("token") String token,MemberService memberService);
 
     /***
      * 查询评价回复表
@@ -207,7 +194,7 @@ public interface IRepastService {
      */
 
     @GetMapping("/doCommentReplay")
-    ResultData doCommentReplay(@RequestParam("orderId") Integer orderId);
+    ResultData doCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("token") String token,MemberService memberService);
 
     /***
      * 评价回复表
@@ -215,9 +202,9 @@ public interface IRepastService {
      * @return
      */
     @PostMapping("/addCommentReplay")
-    Integer addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
+    ResultData addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
                              @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
-                             @RequestParam("type") Integer type);
+                             @RequestParam("type") Integer type,@RequestParam("token") String token,MemberService memberService);
 
 
 
@@ -229,7 +216,7 @@ public interface IRepastService {
      */
 
     @GetMapping("/doCount")
-    Integer doCount(@RequestParam("memberId") Integer memberId);
+    Integer doCount(@RequestParam("token") String token,MemberService memberService);
 
 
 

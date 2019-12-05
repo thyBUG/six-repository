@@ -167,4 +167,20 @@ public class MemberService extends BaseService<Member> {
         return i;
 
     }
+
+
+    /***
+     * 查询token
+     * @param token
+     */
+
+    public  Member  Token(String token){
+        if(null!=token){
+            return memberMapper.selectByPrimaryKey(token);
+        }
+        return  null;
+    }
+
+
+
 }

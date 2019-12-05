@@ -1,26 +1,15 @@
 package com.aaa.lee.app.controller;
 
 import com.aaa.lee.app.base.BaseController;
-import com.aaa.lee.app.base.ResultData;
-import com.aaa.lee.app.domain.Comment;
-import com.aaa.lee.app.domain.CommentVo;
-import com.aaa.lee.app.domain.Order;
+
 import com.aaa.lee.app.service.CommentService;
+import com.aaa.lee.app.service.MemberService;
 import com.aaa.lee.app.service.UploadService;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PhotoController extends BaseController {
@@ -42,11 +31,10 @@ public class PhotoController extends BaseController {
      * @return
      */
     @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadHead(@RequestPart MultipartFile file){ {
+    public String uploadHead(@RequestPart MultipartFile file){
         System.out.println( "provider层"+file.getOriginalFilename());
-        System.out.println( uploadService.uploadHead(file));
         return uploadService.uploadHead(file);
-         }
+
        }
 
     /***
@@ -54,10 +42,10 @@ public class PhotoController extends BaseController {
      */
     @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
     public String upload(@RequestPart(value = "file") MultipartFile[] file) {
-             String path="";
+            String path="";
             String paths="";
-             System.out.println(file.length);
-        Map<String,Object> map= new HashMap<String,Object>();
+            System.out.println(file.length);
+
           for (MultipartFile fina : file) {
             System.out.println("provider层" + fina.getOriginalFilename());
             path= uploadService.uploadHead(fina);
@@ -67,5 +55,6 @@ public class PhotoController extends BaseController {
         System.out.println("================"+paths);
         return paths;
     }
+
 
 }

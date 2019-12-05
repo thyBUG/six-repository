@@ -33,6 +33,8 @@ public class UploadService {
         String oldFileName = file.getOriginalFilename();
         System.out.println("uploadService+"+oldFileName);
         try {
+
+
             // 2.生成新的文件名
                 // id + 随机数 + 时间戳 作为新的文件名
                 // 因为需要id，所以必须要从session中获取

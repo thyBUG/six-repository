@@ -25,7 +25,6 @@ public interface ProductMapper extends Mapper<Product> {
     List<Product> getAllCollects(Long id);
 
 
-    @Override
     List<Product> selectAll();
 
 }

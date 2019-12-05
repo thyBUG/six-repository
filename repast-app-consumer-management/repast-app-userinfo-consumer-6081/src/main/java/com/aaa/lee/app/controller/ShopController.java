@@ -5,6 +5,7 @@ import com.aaa.lee.app.base.BaseController;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.service.IRepastService;
+import com.aaa.lee.app.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,10 @@ public class ShopController extends BaseController {
 
     @ApiOperation(value = "评论",notes = "执行评论操作")
     @GetMapping("/shop")
-    public  ResultData shopResult(@RequestParam("id") Integer id){
-        iRepastService.shopResult(id);
+    public  ResultData shopResult(@RequestParam("id") Integer id,@RequestParam("token") String token,MemberService memberService){
+        ResultData resultData = iRepastService.shopResult(id, token, memberService);
+        return resultData;
 
-        if (null!=iRepastService.shopResult(id)){
-           return iRepastService.shopResult(id);
-       }else {
-           return null;
-       }
     }
-
-
-
 
 }

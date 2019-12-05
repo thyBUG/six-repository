@@ -36,7 +36,7 @@
   </select>
 
 
-  <select id="getCount" resultType="int">
+  <select id="getCount" resultType="java.lang.Integer">
       select count(*) from
 	ums_member um inner join
 	oms_order ord on um.id =ord.member_id join
