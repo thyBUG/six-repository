@@ -10,4 +10,6 @@ public interface MemberMapper extends Mapper<Member> {
     int updateBalance(UpdateBalance ub);
     int updateBir(Map<String,Object> map );
 
+
+    Member selectByTokenId(String token);
 }

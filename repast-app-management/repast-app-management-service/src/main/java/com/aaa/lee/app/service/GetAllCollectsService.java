@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.Product;
+import com.aaa.lee.app.mapper.MemberMapper;
 import com.aaa.lee.app.mapper.ProductMapper;
 import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class GetAllCollectsService extends BaseService<Product> {
     @Autowired
     private ProductMapper productMapper;
 
+    @Autowired
+    private MemberMapper memberMapper;
+
     @Override
     public Mapper<Product> getMapper() {
         return productMapper;
@@ -36,9 +40,8 @@ public class GetAllCollectsService extends BaseService<Product> {
      * @param
      * @return
      */
-    public List<Product> GetAllCollects(RedisService redisService){
-        String key = redisService.get(REDIS_KEY);
-        Member member = JSONUtil.toObject(key, Member.class);
+    public List<Product> GetAllCollects(String token){
+        Member member = memberMapper.selectByTokenId(token);
 
         if(member != null){
             List<Product> collects = productMapper.getAllCollects(member.getId());

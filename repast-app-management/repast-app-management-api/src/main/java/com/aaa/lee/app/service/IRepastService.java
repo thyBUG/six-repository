@@ -33,30 +33,30 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/getAllOrder")
-    List<MyOrder> GetAllOrders();
+    List<MyOrder> GetAllOrders(@RequestParam(value = "token") String token);
     /**
      * 填写订单的时候执行收藏操作
      * @param orderId
-     * @param
+     * @param  token
      * @return
      */
     @PostMapping("/oCollect")
-    Boolean orderCollects(@RequestParam(value = "orderId") Long orderId);
+    Boolean orderCollects(@RequestParam(value = "orderId") Long orderId,@RequestParam(value = "token") String token);
     /**
      * 获取收藏列表信息
-     * @param
+     * @param token
      * @return
      */
     @GetMapping("/getAllCollect")
-    List<Product> getAllCollects();
+    List<Product> getAllCollects(@RequestParam(value = "token") String token);
     /**
      *浏览商品执行添加收藏操作
      * @param shopId
-     * @param
+     * @param token
      * @return
      */
     @PostMapping("/pCollect")
-    Boolean productCollects(@RequestParam(value = "shopId") Long shopId);
+    Boolean productCollects(@RequestParam(value = "shopId") Long shopId,@RequestParam(value = "token") String token);
 
 
 

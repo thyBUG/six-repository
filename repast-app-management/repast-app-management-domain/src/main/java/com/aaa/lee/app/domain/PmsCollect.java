@@ -24,7 +24,7 @@ public class PmsCollect implements Serializable {
     @Column(name = "order_id")
     private Long orderId;
 
-    @Column(name = "open_id")
-    private String openId;
+    @Column(name = "token")
+    private String token;
 
 }

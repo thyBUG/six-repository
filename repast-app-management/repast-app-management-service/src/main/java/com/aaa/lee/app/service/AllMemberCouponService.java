@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.aaa.lee.app.staticstatus.StaticProperties.*;
 
+/**
+ * @author Administrator
+ */
 @Service
 public class AllMemberCouponService extends BaseService<MemberCouponInfo> {
 

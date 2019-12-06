@@ -25,9 +25,6 @@ public class MyCollectsController {
     private DoProductCollectService doProductCollectService;
 
     @Autowired
-    private RedisService redisService;
-
-    @Autowired
     private DoOrderCollectService doOrderCollectService;
 
     @Autowired
@@ -43,9 +40,9 @@ public class MyCollectsController {
      * @return
      */
     @PostMapping("/pCollect")
-    public Boolean productCollects(@RequestParam(value = "shopId") Long shopId){
+    public Boolean productCollects(@RequestParam(value = "shopId") Long shopId,@RequestParam(value = "token") String token){
 
-        return doProductCollectService.DoProductCollect(shopId,redisService);
+        return doProductCollectService.DoProductCollect(shopId,token);
     };
 
     /**
@@ -55,8 +52,8 @@ public class MyCollectsController {
      * @return
      */
     @PostMapping("/oCollect")
-    public Boolean orderCollects(@RequestParam(value = "orderId") Long orderId){
-        return doOrderCollectService.orderCollectss(orderId, redisService);
+    public Boolean orderCollects(@RequestParam(value = "orderId") Long orderId,@RequestParam(value = "token") String token){
+        return doOrderCollectService.orderCollectss(orderId,token);
     };
 
     /**
@@ -65,8 +62,8 @@ public class MyCollectsController {
      * @return
      */
     @GetMapping("/getAllCollect")
-    public List<Product> getAllCollects(){
-        return getAllCollects.GetAllCollects(redisService);
+    public List<Product> getAllCollects(@RequestParam(value = "token") String token){
+        return getAllCollects.GetAllCollects(token);
     };
 
     /**
@@ -74,8 +71,8 @@ public class MyCollectsController {
      * @return
      */
     @GetMapping("/getAllOrder")
-    public List<MyOrder> GetAllOrders(){
-        return getAllOrdersService.getAllOrders(redisService);
+    public List<MyOrder> GetAllOrders(@RequestParam(value = "token") String token){
+        return getAllOrdersService.getAllOrders(token);
     };
 
 

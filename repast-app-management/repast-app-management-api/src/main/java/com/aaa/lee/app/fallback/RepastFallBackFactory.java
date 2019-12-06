@@ -69,25 +69,25 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public List<MyOrder> GetAllOrders() {
+            public List<MyOrder> GetAllOrders(String token) {
                 System.out.println("获取订单信息列表");
                 return null;
             }
 
             @Override
-            public Boolean orderCollects(Long orderId) {
+            public Boolean orderCollects(Long orderId,String token) {
                 System.out.println("测试订单商品收藏熔断数据");
                 return null;
             }
 
             @Override
-            public List<Product> getAllCollects() {
+            public List<Product> getAllCollects(String token) {
                 System.out.println("测试获取收藏信息列表");
                 return null;
             }
 
             @Override
-            public Boolean productCollects(Long shopId) {
+            public Boolean productCollects(Long shopId,String token) {
                 System.out.println("测试商品收藏熔断数据");
                 return null;
             }

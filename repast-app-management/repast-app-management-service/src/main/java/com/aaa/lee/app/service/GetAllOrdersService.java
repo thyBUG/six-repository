@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MyOrder;
+import com.aaa.lee.app.mapper.MemberMapper;
 import com.aaa.lee.app.mapper.MyOrderMapper;
 import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class GetAllOrdersService extends BaseService<MyOrder> {
     @Autowired
     private MyOrderMapper myOrderMapper;
 
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Override
     public Mapper<MyOrder> getMapper() {
@@ -34,13 +37,12 @@ public class GetAllOrdersService extends BaseService<MyOrder> {
 
     /**
      * 获取订单信息列表信息
-     * @param redisService
+     * @param token
      * @return
      */
-    public List<MyOrder> getAllOrders(RedisService redisService){
+    public List<MyOrder> getAllOrders(String token){
 
-        String s = redisService.get(REDIS_KEY);
-        Member member = JSONUtil.toObject(s, Member.class);
+        Member member = memberMapper.selectByTokenId(token);
 
         if(member != null){
             List<MyOrder> myOrders = myOrderMapper.getAllOrders(member.getId());

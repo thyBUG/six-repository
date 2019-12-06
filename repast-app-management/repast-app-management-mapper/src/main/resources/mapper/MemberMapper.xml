@@ -39,5 +39,8 @@
     update ums_member set birthday=#{birthday} where id=#{id}
   </update>
 
+  <select id="selectByTokenId" resultMap="BaseResultMap" parameterType="String">
+      select * from ums_member where token = #{token}
+  </select>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.PmsCollect;
+import com.aaa.lee.app.mapper.MemberMapper;
 import com.aaa.lee.app.mapper.PmsCollectMapper;
 import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DoOrderCollectService extends BaseService<PmsCollect> {
     @Autowired
     private PmsCollectMapper pmsCollectMapper;
 
+    @Autowired
+    private MemberMapper memberMapper;
+
     PmsCollect collect = new PmsCollect();
 
     @Override
@@ -35,17 +39,18 @@ public class DoOrderCollectService extends BaseService<PmsCollect> {
      * 下订单执行收藏操作
      * @param orderId
      * @param
-     * @param redisService
+     * @param token
      * @return
      */
-    public Boolean orderCollectss(Long orderId, RedisService redisService){
-        String s = redisService.get(REDIS_KEY);
-        Member m = JSONUtil.toObject(s, Member.class);
-        Long mId = m.getId();
+    public Boolean orderCollectss(Long orderId, String token){
 
-        if(m != null){
+        Member member = memberMapper.selectByTokenId(token);
+        Long mId = member.getId();
+
+        if(member != null){
             collect.setOrderId(orderId);
             collect.setMemberId(mId);
+            collect.setToken(token);
             int i = pmsCollectMapper.insert(collect);
             if(i>0){
                 return true;

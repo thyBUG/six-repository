@@ -35,8 +35,8 @@ public class MyCollectsController extends BaseController {
      */
     @PostMapping("/pCollect")
     @ApiOperation(value = "商品收藏", notes = "浏览商品信息时点击收藏")
-    public ResultData productCollects(Long shopId) {
-        Boolean a = repastService.productCollects(shopId);
+    public ResultData productCollects(Long shopId,String token) {
+        Boolean a = repastService.productCollects(shopId,token);
         if(a == true){
             return success();
         }else {
@@ -51,8 +51,8 @@ public class MyCollectsController extends BaseController {
      */
     @PostMapping("/oCollect")
     @ApiOperation(value = "订单商品收藏", notes = "下订单时点击收藏")
-    public ResultData orderCollects(Long orderId) {
-        Boolean a = repastService.orderCollects(orderId);
+    public ResultData orderCollects(Long orderId,String token) {
+        Boolean a = repastService.orderCollects(orderId,token);
 
         if(a == true){
             return success();
@@ -67,8 +67,8 @@ public class MyCollectsController extends BaseController {
      */
     @GetMapping("/getAllCollect")
     @ApiOperation(value = "商品收藏列表", notes = "获取所有收藏商品列表")
-    public ResultData getAllCollects() {
-        List<Product> a = repastService.getAllCollects();
+    public ResultData getAllCollects(String token) {
+        List<Product> a = repastService.getAllCollects(token);
         if(a.size()>0){
             return success(a);
         }else {
@@ -82,8 +82,8 @@ public class MyCollectsController extends BaseController {
      */
     @GetMapping("/getOrders")
     @ApiOperation(value = "获取订单信息",notes = "获取所有收藏订单信息")
-    public ResultData GetAllOrders(){
-        List<MyOrder> myOrders = repastService.GetAllOrders();
+    public ResultData GetAllOrders(String token){
+        List<MyOrder> myOrders = repastService.GetAllOrders(token);
         if(myOrders != null){
             return success(myOrders);
         }else{
