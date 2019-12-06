@@ -2,7 +2,6 @@ package com.aaa.lee.app.controller;
 
 import com.aaa.lee.app.base.BaseController;
 import com.aaa.lee.app.domain.CouponInfo;
-import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.service.IRepastService;
 import com.aaa.lee.app.vo.MemberCouponInfoVo;
 import io.swagger.annotations.Api;
@@ -16,6 +15,7 @@ import java.util.List;
 @RestController
 @Api(value = "优惠券接口",tags = "调用优惠券接口")
 public class CouponController extends BaseController {
+
     @Autowired
     private IRepastService repastService;
 

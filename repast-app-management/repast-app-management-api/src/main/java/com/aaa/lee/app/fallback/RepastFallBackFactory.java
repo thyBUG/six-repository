@@ -3,11 +3,9 @@ package com.aaa.lee.app.fallback;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.service.IRepastService;
-import com.aaa.lee.app.service.MemberService;
 import com.aaa.lee.app.vo.MemberCouponInfoVo;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -145,52 +143,52 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public ResultData doComment(String token,MemberService memberService) {
+            public ResultData doComment(String token) {
                 System.out.println("测试熔断方法");
                 return null;
             }
             @Override
-            public ResultData deleteComment(Integer id,String token,MemberService memberService) {
+            public ResultData deleteComment(Integer id,String token) {
                 System.out.println("deleteComment测试");
                 return null;
             }
 
             @Override
-            public ResultData addComment(Integer shopId, Integer orderId, Integer productId, String memberNickName, String productName, Integer star, String memberIp, Integer showStatus, String productAttribute, Integer collectCouont, String pics, String memberIcon, Integer replayCount, String conent,String token, MemberService memberService) {
+            public ResultData addComment(Comment comment,String token) {
                 System.out.println("测试");
                 return null;
             }
 
             @Override
-            public String uploadHead(MultipartFile file) {
+            public String uploadHead(MultipartFile file,String token) {
                 System.out.println("测试");
                 return null;
             }
 
             @Override
-            public String upload(MultipartFile[] file) {
+            public String upload(MultipartFile[] file,String token) {
                 System.out.println("多图片上传测试");
                 return null;
             }
 
             @Override
-            public ResultData shopResult(Integer id,String token,MemberService memberService) {
+            public ResultData shopResult(Integer id,String token) {
                 return null;
             }
 
             @Override
-            public ResultData doCommentReplay(Integer commentId, String token,MemberService memberService) {
+            public ResultData doCommentReplay(Integer commentId, String token) {
                 System.out.println("回复熔断测试");
                 return null;
             }
 
             @Override
-            public ResultData addCommentReplay(Integer commentId, String memberNickName, String memberIcon, String content,Integer type,String token,MemberService memberService) {
+            public ResultData addCommentReplay(CommentReplay commentReplay,String token) {
                 return null;
             }
 
             @Override
-            public Integer doCount(String token,MemberService memberService) {
+            public Integer doCount(String token) {
                 return null;
             }
         };

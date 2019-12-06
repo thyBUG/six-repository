@@ -10,7 +10,6 @@ import tk.mybatis.mapper.common.Mapper;
  * @Date Create in 2019/11/20 12:12
  * @Description
  **/
-@Repository
 public interface ShopMapper extends Mapper<Shop> {
 
 

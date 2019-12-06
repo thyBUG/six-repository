@@ -6,15 +6,9 @@ import com.aaa.lee.app.service.IRepastService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-
-import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -25,18 +19,19 @@ public class PhotoController extends BaseController {
 
 
 
-    @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
+    @PostMapping(value = "/uploadHead")
     @ApiOperation(value = "图片上传接口",notes = "执行图片上传接口操作")
-   public String uploadHead(@RequestPart("file") MultipartFile file){
+   public String uploadHead(MultipartFile file,String token){
         System.out.println( "consumer层"+file.getOriginalFilename());
-        return  iRepastService.uploadHead(file);
+        return  iRepastService.uploadHead(file,token);
     }
 
 
     @ApiOperation(value = "多图片上传接口",notes = "执行图片上传接口操作")
-    @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
-    public String upload(@RequestPart(value = "file") MultipartFile[] file){
-        String path=iRepastService.upload(file);
+    @PostMapping(value = "/upload")
+    public String upload(MultipartFile[] file,String token){
+        String path=iRepastService.upload(file,token);
         return  path;
     }
 

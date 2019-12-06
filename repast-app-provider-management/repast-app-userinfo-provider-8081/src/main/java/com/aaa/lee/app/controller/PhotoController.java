@@ -1,24 +1,21 @@
 package com.aaa.lee.app.controller;
 
 import com.aaa.lee.app.base.BaseController;
-
 import com.aaa.lee.app.service.CommentService;
-import com.aaa.lee.app.service.MemberService;
 import com.aaa.lee.app.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @RestController
 public class PhotoController extends BaseController {
 
    @Autowired
-    private CommentService commentService;
+   private UploadService uploadService;
 
    @Autowired
-   private UploadService uploadService;
+   private CommentService commentService;
 
 
 
@@ -31,9 +28,9 @@ public class PhotoController extends BaseController {
      * @return
      */
     @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadHead(@RequestPart MultipartFile file){
+    public String uploadHead(@RequestPart MultipartFile file,@RequestParam("token") String token){
         System.out.println( "provider层"+file.getOriginalFilename());
-        return uploadService.uploadHead(file);
+        return uploadService.uploadHead(file,token,commentService);
 
        }
 
@@ -41,14 +38,13 @@ public class PhotoController extends BaseController {
      * 多文件上传
      */
     @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
-    public String upload(@RequestPart(value = "file") MultipartFile[] file) {
+    public String upload(@RequestPart(value = "file") MultipartFile[] file,@RequestParam("token") String token) {
             String path="";
             String paths="";
             System.out.println(file.length);
-
           for (MultipartFile fina : file) {
             System.out.println("provider层" + fina.getOriginalFilename());
-            path= uploadService.uploadHead(fina);
+            path= uploadService.uploadHead(fina,token,commentService);
             path=path+";";
             paths+=path;
         }

@@ -27,7 +27,6 @@ import java.util.List;
 @FeignClient(value = "userinfo-interface-provider", fallbackFactory = RepastFallBackFactory.class,configuration =FeignMultipartSupportConfig.class)
 public interface IRepastService {
 
-
     /**
      * 获取所有订单信息列表
      * @return
@@ -88,6 +87,8 @@ public interface IRepastService {
      */
    @PostMapping("/updateBalance")
     Integer updateBalance(@RequestParam("number") Double number);
+
+
     /**
      * 查询积分商城可兑换的商品信息
      * @return
@@ -139,7 +140,7 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/doComment")
-    ResultData doComment(@RequestParam("token") String token,MemberService memberService);
+    ResultData doComment(@RequestParam("token") String token);
 
     /***
      * 删除评价
@@ -147,18 +148,14 @@ public interface IRepastService {
      * @return
      */
     @GetMapping("/deleteComment")
-    ResultData deleteComment(@RequestParam("id") Integer id,@RequestParam("token") String token,MemberService memberService);
+    ResultData deleteComment(@RequestParam("id") Integer id,@RequestParam("token") String token);
 
     /***
      * 添加评价
      * @return
      */
-    @GetMapping("/addComment")
-    ResultData addComment(@RequestParam("shopId")  Integer shopId, @RequestParam("orderId") Integer orderId, @RequestParam("roductId") Integer productId,
-                          @RequestParam("memberNickName") String memberNickName, @RequestParam("productName") String productName, @RequestParam("star") Integer star, @RequestParam("memberIp") String memberIp,
-                          @RequestParam("showStatus") Integer showStatus, @RequestParam("productAttribute") String productAttribute, @RequestParam("collectCouont") Integer collectCouont,
-                          @RequestParam("pics") String pics, @RequestParam("memberIcon") String memberIcon, @RequestParam("replayCount") Integer replayCount, @RequestParam("conent") String conent,
-                          @RequestParam("token") String token,MemberService memberService);
+    @PostMapping("/addComment")
+    ResultData addComment(@RequestBody Comment comment,@RequestParam("token") String token);
 
     /**
      * 单添加图片
@@ -167,7 +164,7 @@ public interface IRepastService {
      */
 
     @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadHead(@RequestPart MultipartFile file);
+    String uploadHead(@RequestPart MultipartFile file,@RequestParam("token") String token);
 
 
     /***
@@ -177,14 +174,14 @@ public interface IRepastService {
      */
 
     @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-     String upload(@RequestPart(value = "file") MultipartFile[]  file);
+     String upload(@RequestPart(value = "file") MultipartFile[]  file,@RequestParam("token") String token);
     /**
      * 根据 订单ID查点铺信息
      * @param id
      * @return
      */
     @GetMapping("/shop")
-    ResultData shopResult(@RequestParam("shopId") Integer id,@RequestParam("token") String token,MemberService memberService);
+    ResultData shopResult(@RequestParam("shopId") Integer id,@RequestParam("token") String token);
 
     /***
      * 查询评价回复表
@@ -194,7 +191,7 @@ public interface IRepastService {
      */
 
     @GetMapping("/doCommentReplay")
-    ResultData doCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("token") String token,MemberService memberService);
+    ResultData doCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("token") String token);
 
     /***
      * 评价回复表
@@ -202,9 +199,7 @@ public interface IRepastService {
      * @return
      */
     @PostMapping("/addCommentReplay")
-    ResultData addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
-                             @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
-                             @RequestParam("type") Integer type,@RequestParam("token") String token,MemberService memberService);
+    ResultData addCommentReplay(@RequestBody CommentReplay commentReplay,@RequestParam("token") String token);
 
 
 
@@ -216,7 +211,7 @@ public interface IRepastService {
      */
 
     @GetMapping("/doCount")
-    Integer doCount(@RequestParam("token") String token,MemberService memberService);
+    Integer doCount(@RequestParam("token") String token);
 
 
 

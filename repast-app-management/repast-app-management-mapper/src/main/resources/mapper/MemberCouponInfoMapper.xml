@@ -58,4 +58,6 @@
     <select id="countOfCoupon" parameterType="Long" resultType="Long">
         select count(*) from sms_coupon_history where member_id=#{memberId} and coupon_id = #{couponId}
     </select>
+
+
 </mapper>

@@ -1,5 +1,4 @@
 package com.aaa.lee.app.service;
-
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.UpdateBalance;
@@ -8,8 +7,6 @@ import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
-
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -167,20 +164,5 @@ public class MemberService extends BaseService<Member> {
         return i;
 
     }
-
-
-    /***
-     * 查询token
-     * @param token
-     */
-
-    public  Member  Token(String token){
-        if(null!=token){
-            return memberMapper.selectByPrimaryKey(token);
-        }
-        return  null;
-    }
-
-
 
 }

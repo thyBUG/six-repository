@@ -5,10 +5,9 @@ import com.aaa.lee.app.domain.MemberCouponInfo;
 import com.aaa.lee.app.mapper.MemberCouponInfoMapper;
 import com.aaa.lee.app.utils.JSONUtil;
 import com.aaa.lee.app.vo.MemberCouponInfoVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +23,6 @@ public class AllMemberCouponService extends BaseService<MemberCouponInfo> {
 
     @Autowired
     private MemberCouponInfoMapper memberCouponInfoMapper;
-
     @Override
     public Mapper<MemberCouponInfo> getMapper() {
         return memberCouponInfoMapper;
@@ -45,7 +43,8 @@ public class AllMemberCouponService extends BaseService<MemberCouponInfo> {
                 String currentTime = currentTime1.format(new Date());
            HashMap<String, String> statusMap = new HashMap<String, String>();
 
-            if (null != allMemberCouponInfo) {//说明查询到所有优惠券
+            if (null != allMemberCouponInfo) {
+                //说明查询到所有优惠券
                 for (MemberCouponInfoVo coupon:allMemberCouponInfo) {
                    //获取到数据库中的优惠券开始时间和结束时间，并将数据格式化
                     Date startTime = coupon.getStartTime();

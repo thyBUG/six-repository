@@ -6,10 +6,8 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-@Repository
 public interface CouponInfoMapper extends Mapper<CouponInfo> {
     List<CouponInfo> getCouponCenter();
-
     CouponInfo getCouponById(Long couponId);
 
 }

@@ -2,9 +2,11 @@ package com.aaa.lee.app.mapper;
 
 import com.aaa.lee.app.domain.MemberCouponInfo;
 import com.aaa.lee.app.vo.MemberCouponInfoVo;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+
 
 public interface MemberCouponInfoMapper extends Mapper<MemberCouponInfo> {
     /**

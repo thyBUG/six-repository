@@ -1,4 +1,5 @@
 package com.aaa.lee.app.service;
+import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.mapper.CommentMapper;
 import com.aaa.lee.app.properties.FtpProperties;
 import com.aaa.lee.app.utils.FileNameUtil;
@@ -27,7 +28,10 @@ public class UploadService {
     @Autowired
     private CommentMapper commentMapper;
 
-    public String uploadHead(MultipartFile file) {
+    public String uploadHead(MultipartFile file,String token,CommentService commentService) {
+
+        Member member = commentService.Token(token);
+
         Map<String, Object> resultMap = new HashMap<String, Object>();
         // 1.获取原始文件名(需要获取文件的后缀名)
         String oldFileName = file.getOriginalFilename();

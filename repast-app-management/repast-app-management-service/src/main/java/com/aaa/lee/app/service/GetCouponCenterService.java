@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class GetCouponCenterService extends BaseService<CouponInfo> {
+
     @Autowired
     private CouponInfoMapper couponInfoMapper;
 

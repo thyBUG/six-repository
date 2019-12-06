@@ -4,7 +4,7 @@ import com.aaa.lee.app.base.BaseController;
 import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.CommentReplay;
 import com.aaa.lee.app.service.CommentReplayService;
-import com.aaa.lee.app.service.MemberService;
+import com.aaa.lee.app.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,7 @@ public class CommentReplayController extends BaseController {
     private CommentReplayService commentReplayService;
 
    @Autowired
-   private MemberService memberService;
-
+   private CommentService commentService;
 
     /**
      * 查询评价回复表
@@ -27,16 +26,15 @@ public class CommentReplayController extends BaseController {
      * @return
      */
     @GetMapping("/doCommentReplay")
-    public ResultData doCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("token") String token,MemberService memberService){
+    public ResultData doCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("token") String token){
         System.out.println("jjcnjcj"+"----"+commentId);
-        List<CommentReplay> CommentReplayList = commentReplayService.doCommentReplay(commentId,token,memberService);
+        List<CommentReplay> CommentReplayList = commentReplayService.doCommentReplay(commentId.longValue(),token,commentService);
           if (null!=CommentReplayList){
              return success("查询成功",CommentReplayList);
           }else {
              return failed("查询失败");
           }
       }
-
     /***
      * 评价回复
      * @param commentReplay
@@ -44,20 +42,11 @@ public class CommentReplayController extends BaseController {
      */
 
     @PostMapping("/addCommentReplay")
-    public ResultData addCommentReplay(@RequestParam("commentId") Integer commentId,@RequestParam("memberNickName") String memberNickName,
-                               @RequestParam("memberIcon") String memberIcon,@RequestParam("content") String content,
-                               @RequestParam("type") Integer type,@RequestParam("token") String token,MemberService memberService) {
+    public ResultData addCommentReplay(@RequestBody CommentReplay commentReplay,@RequestParam("token") String token) {
 
-        System.out.println("+++++++" + commentId);
+        System.out.println("+++++++" + commentReplay.getCommentId());
 
-        CommentReplay commentReplay = new CommentReplay();
-        commentReplay.setCommentId(commentId.longValue());
-        commentReplay.setMemberNickName(memberNickName);
-        commentReplay.setMemberIcon(memberIcon);
-        commentReplay.setContent(content);
-        commentReplay.setType(type);
-
-        Integer result = commentReplayService.addCommentReplay(commentReplay, token, memberService);
+        Integer result = commentReplayService.addCommentReplay(commentReplay,token,commentService);
 
         if (null != result) {
             return success("添加成功");

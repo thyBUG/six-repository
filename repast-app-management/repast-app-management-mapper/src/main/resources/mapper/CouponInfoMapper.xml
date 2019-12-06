@@ -29,7 +29,9 @@
   <select id="getCouponCenter" resultMap="BaseResultMap">
     select * from sms_coupon where NOW()  between sms_coupon.enable_time and sms_coupon.end_time
   </select>
+
     <select id="getCouponById" resultMap="BaseResultMap">
     select * from sms_coupon where id = #{couponId}
   </select>
+
 </mapper>

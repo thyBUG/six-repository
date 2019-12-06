@@ -1,20 +1,16 @@
 package com.aaa.lee.app.service;
-
 import com.aaa.lee.app.base.BaseService;
-import com.aaa.lee.app.domain.Comment;
-import com.aaa.lee.app.domain.CommentVo;
-import com.aaa.lee.app.domain.Member;
+import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.mapper.CommentMapper;
-import com.aaa.lee.app.utils.DateUtil;
+import com.aaa.lee.app.mapper.CommentReplayMapper;
+import com.aaa.lee.app.vo.CommentProVo;
+import com.aaa.lee.app.vo.MemberCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 /**
  * @Company AAA软件教育
  * @Author Seven Lee
@@ -27,6 +23,9 @@ public class CommentService extends BaseService<Comment> {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private  CommentReplayMapper commentReplayMapper;
+
     @Override
     public Mapper<Comment> getMapper() {
         return commentMapper;
@@ -36,20 +35,33 @@ public class CommentService extends BaseService<Comment> {
      * 查询
      * @return
      */
-    public List<CommentVo> doComment(String token,MemberService memberService) {
+    public List<MemberCommentVo> doComment(String token) {
         try {
-            if (null != token) {
-                Member member = memberService.Token(token);
-                if (null != member.getToken()) {
-                    Long memberId = member.getId();
-                    List<CommentVo> doCommentList = commentMapper.getseleteAll(memberId.intValue());
-                    if (null != doCommentList){
-                        return doCommentList;
+            Member member = Token(token);
+            Long memberId = member.getId();
+            List<MemberCommentVo> memberCommentVos = commentMapper.getseleteAll(memberId.intValue());
+            if (null != memberCommentVos){
+                for (MemberCommentVo mcm : memberCommentVos){
+                    Long orderId = mcm.getOrderId();
+                    Long commentId = mcm.getId();
+                    Long productId = mcm.getProductId();
+                    // 通过订单id查询该商品的所属的商品信息
+                    List<CommentProVo> commentProVos = commentMapper.selectProComment(orderId);
+                    // 判断该评价信息中商品id是否为空
+                    if(null == productId){
+                        System.out.println("该订单为多个商品");
+                        // 如果为空，则把商品信息存放到该订单所属的评价里
+                        mcm.setMemberCommentVos(commentProVos);
+                    }else{
+                        // 如果不为空，继续执行；
+                        continue;
                     }
-                    return null;
-                }
-                return null;
-            }
+                    List<CommentReplay> commentReplays = commentReplayMapper.selectsAll(commentId);
+                    // 把回复信息存放到评价里
+                    mcm.setCommentReplays(commentReplays);
+                        }
+                        return memberCommentVos;
+                    }
             return null;
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,80 +76,95 @@ public class CommentService extends BaseService<Comment> {
      * @return
      */
 
-    public Integer deleteComment(Integer id,String token,MemberService memberService){
+    public Integer deleteComment(Integer id,String token){
         try {
-            if (null!=token){
-                Member member = memberService.Token(token);
-                if (null != member.getToken()) {
-                    Integer integer = super.deleteByPrimaryKey(id);
+                    Member member = Token(token);
+                    Integer integer = commentMapper.updateCommentStatus(id.longValue());
                     if (null!=integer){
                         return integer;
                     }
-                    return null;
-                }
-                return null;
-            }
             return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
-
     /**
      * 添加评价
      * @param comment
      * @param token
-     * @param memberService
+     * @param commentmapper
      * @return
      */
-   public  Integer addComment (Comment comment,String token,MemberService memberService){
-
+   public  Integer addComment (Comment comment,String token) {
        try {
-           if (null!=token){
-               Member member = memberService.Token(token);
-               if (null != member.getToken()) {
-                   SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-                   Date date=dateFormat.parse(dateFormat.format(new Date()));
-                   comment.setCreateTime(date);
-                   Integer save = super.save(comment);
-                   if (null!=save){
-                       return save;
+           Member member = Token(token);
+           Long orderId = comment.getOrderId();
+           List<CommentProVo> commentProVos = commentMapper.selectProComment(orderId);
+           System.out.println("订单查询" + commentProVos.toString());
+
+               if (commentProVos.size() == 1) {
+                   // 如果该订单中为单个商品,则添加到评价表中
+                   for (CommentProVo commentProVo : commentProVos) {
+                       Long productId = commentProVo.getProductId();
+                       String productName = commentProVo.getProductName();
+                       String name = commentProVo.getName();
+                       comment.setOrderId(orderId);
+                       comment.setProductId(productId);
+                       comment.setProductName(productName);
+                       comment.setProductAttribute(name);
                    }
-                   return null;
-               }
-               return null;
-               }
-          return null;
-       } catch (Exception e) {
-           e.printStackTrace();
+                }
+           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           Date date = dateFormat.parse(dateFormat.format(new Date()));
+           comment.setCreateTime(date);
+           Integer save = super.save(comment);
+           if (null != save) {
+               return save;
+           }
+            return null;
+           } catch(Exception e){
+               e.printStackTrace();
+           }
+           return null;
        }
-       return  null;
-   }
+
 
     /***
      * 评价数量
      */
-   public  Integer Count(String token,MemberService memberService){
+   public  Integer Count(String token){
        try {
-           if (null!=token){
-               Member member = memberService.Token(token);
-               if (null != member.getToken()) {
-                   int count = commentMapper.getCount(member.getId().intValue());
+           Member member = Token(token);
+           int count = commentMapper.getCount(member.getId().intValue());
                    if (count>0){
                        return count;
                    }
-                   return null;
-               }
-                return null;
-               }
            return null;
        }catch (Exception e){
            e.printStackTrace();
        }
        return null;
 
+   }
+
+
+    /**
+     * 通过token判断登陆状态，并查询memberId
+     * @param token
+     * @return
+     */
+
+
+   public  Member Token(String token){
+       if (null!=token){
+           Member member = commentMapper.Token(token);
+           if (null != member.getToken()) {
+               return member;
+               }
+               return null;
+           }
+       return null;
    }
 
 
