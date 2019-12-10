@@ -75,7 +75,6 @@ public class CommentService extends BaseService<Comment> {
      * @param id
      * @return
      */
-
     public Integer deleteComment(Integer id,String token){
         try {
                     Member member = Token(token);
@@ -118,6 +117,7 @@ public class CommentService extends BaseService<Comment> {
            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
            Date date = dateFormat.parse(dateFormat.format(new Date()));
            comment.setCreateTime(date);
+           comment.setShowStatus(0);
            Integer save = super.save(comment);
            if (null != save) {
                return save;

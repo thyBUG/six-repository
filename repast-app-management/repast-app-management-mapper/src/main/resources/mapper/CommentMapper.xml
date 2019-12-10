@@ -31,7 +31,7 @@
 	oms_order ord on um.id =ord.member_id	inner join
     pms_comment pt on ord.shop_id=pt.shop_id  inner join
 	pms_product ppt on ppt.shop_id=ord.shop_id
-	where  ord.`status`=3  and  pt.show_status=1 and ord.member_id=#{memberId}
+	where  ord.`status`=3  and  pt.show_status=0 and ord.member_id=#{memberId}
   </select>
 
 

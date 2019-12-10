@@ -33,7 +33,7 @@ public class CommentController extends BaseController {
     }
 
         @PostMapping("/addComment")
-        @ApiOperation(value = "添加数据接口",notes = "执行添加订单数据接口操作")
+        @ApiOperation(value = "添加数据评价接口",notes = "执行添加数据评价接口操作")
      public   ResultData addComment(Comment comment,String token){
             System.out.println("skjdbgvjdgbfbfkb"+comment.getShopId());
             ResultData resultData = iRepastService.addComment(comment,token);
@@ -50,7 +50,6 @@ public class CommentController extends BaseController {
     public ResultData doCount(String token){
         Integer integer = iRepastService.doCount(token);
         return success("查询成功",integer);
-
     }
 
 

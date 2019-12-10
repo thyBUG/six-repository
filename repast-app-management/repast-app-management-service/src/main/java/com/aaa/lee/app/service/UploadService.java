@@ -25,10 +25,9 @@ public class UploadService {
     @Autowired
     private FtpProperties ftpProperties;
 
-    @Autowired
-    private CommentMapper commentMapper;
 
     public String uploadHead(MultipartFile file,String token,CommentService commentService) {
+
 
         Member member = commentService.Token(token);
 
